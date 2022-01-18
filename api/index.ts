@@ -36,6 +36,7 @@ const endpoints = {
 }
 
 export default (request: VercelRequest, response: VercelResponse) => {
+    console.log(request);
     const callType = request.headers.calltype;
     if (!endpoints[callType] || !callType)
         return response.json({ error: "Bad or invalid call type specified in req header.. Valid types: " + (()=>{
