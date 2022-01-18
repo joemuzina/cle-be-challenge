@@ -1,6 +1,5 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import { NowRequest, NowResponse } from '@vercel/node'
 
-export default (request: VercelRequest, response: VercelResponse) => {
-  const { name = "Worlds" } = request.query;
-  response.status(200).send(`Hello ${name}!`);
-};
+export default (req: NowRequest, res: NowResponse) => {
+  return res.json({ message: 'Hello World' })
+}
