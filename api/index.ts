@@ -62,5 +62,7 @@ export default (request: VercelRequest, response: VercelResponse) => {
             return res;
         })()})
     
-    return response.json(endpoints[callType](params));
+    const result = response.json(endpoints[callType](params));
+    console.log(result);
+    return result;
 };
