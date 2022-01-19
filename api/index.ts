@@ -62,5 +62,7 @@ module.exports = (request: VercelRequest, response: VercelResponse) => {
             return res;
         })()})
     
+    response.setHeader('Access-Control-Allow-Credentials', 'true');
+    response.setHeader('Access-Control-Allow-Origin', '*');
     response.status(200).send(endpoints[callType](params));
 };
