@@ -35,25 +35,8 @@ const endpoints = {
     }
 }
 
-module.exports = (request: VercelRequest, response: VercelResponse) => {
-    let charPos = request.url.indexOf('?') + 1;
-    const paramsStr = request.url.substring(charPos, request.url.length);
-    charPos = 0;
-    let params = {};
-
-    while (charPos < paramsStr.length) {
-        let endOfParamPos = paramsStr.indexOf('&', charPos);
-        if (endOfParamPos == -1)
-            endOfParamPos = paramsStr.length;
-
-        let endOfKeyPos = paramsStr.indexOf('=', charPos);
-        let key = paramsStr.substring(charPos, endOfKeyPos);
-        let val = paramsStr.substring(endOfKeyPos + 1, endOfParamPos)
-        params[key] = val;
-        charPos = endOfParamPos + 1;
-    }
-
-    const callType = params['calltype'];
+export default (request: VercelRequest, response: VercelResponse) => {
+    const callType = request.headers.calltype;
     if (!endpoints[callType] || !callType)
         return response.json({ error: "Bad or invalid call type specified in req header.. Valid types: " + (()=>{
             let res = "";
@@ -62,7 +45,5 @@ module.exports = (request: VercelRequest, response: VercelResponse) => {
             return res;
         })()})
     
-    response.setHeader('Access-Control-Allow-Credentials', 'true');
-    response.setHeader('Access-Control-Allow-Origin', '*');
-    response.status(200).send(endpoints[callType](params));
+    return response.json(endpoints[callType](request.headers));
 };
