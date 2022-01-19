@@ -79,7 +79,14 @@ module.exports = (request: VercelRequest, response: VercelResponse) => {
             return res;
         })()})
     
-    allowCors(function(req, res) {
-        res.status(200).send(endpoints[callType](params));
-    })
+    response.setHeader('Access-Control-Allow-Credentials', true)
+    response.setHeader('Access-Control-Allow-Origin', '*')
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    response.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+    response.status(200).send(endpoints[callType](params));
 };
