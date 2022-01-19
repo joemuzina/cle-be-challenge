@@ -66,5 +66,5 @@ module.exports = (request: VercelRequest, response: VercelResponse) => {
     console.log("printing result below");
     console.log(result);
     console.log("result^");
-    response.send(result);
+    response.send(JSON.stringify(result));
 };
