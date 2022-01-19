@@ -35,7 +35,7 @@ const endpoints = {
     }
 }
 
-export default (request: VercelRequest, response: VercelResponse) => {
+module.exports = (request: VercelRequest, response: VercelResponse) => {
     let charPos = request.url.indexOf('?') + 1;
     const paramsStr = request.url.substring(charPos, request.url.length);
     charPos = 0;
@@ -62,9 +62,9 @@ export default (request: VercelRequest, response: VercelResponse) => {
             return res;
         })()})
     
-    const result = response.json(endpoints[callType](params));
+    const result = endpoints[callType](params);
     console.log("printing result below");
     console.log(result);
     console.log("result^");
-    return result;
+    response.send(result);
 };
