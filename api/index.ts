@@ -62,9 +62,10 @@ module.exports = (request: VercelRequest, response: VercelResponse) => {
             return res;
         })()})
     
-    const result = endpoints[callType](params);
+    const result = JSON.stringify(endpoints[callType](params));
     console.log("printing result below");
     console.log(result);
     console.log("result^");
-    response.send(JSON.stringify(result));
+    //response.send(JSON.stringify(result));
+    response.status(200).send(result);
 };
